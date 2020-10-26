@@ -1,12 +1,13 @@
 # driver_supervised_linearregression.py
 
-import NeuralNetwork
 import matplotlib.pyplot as plt
+import NeuralNetwork
 import numpy as np
 import Optimizer
 import plot_results
 
 # (1) Set up data
+np.random.seed(100)
 m = 1000
 X = np.random.rand(1,m)
 Y = 0.5*X + 0.25
@@ -21,9 +22,10 @@ model.compile("meansquarederror",optimizer)
 epochs = 50
 history = model.fit(X,Y,epochs)
 # (5) Results
-# plot loss and accuracy
+# plot loss 
 plot_results.plot_results_history(history,["loss"])
-plot_results.plot_results_history(history,["accuracy"])
-# plot results
-plot_results.plot_results_linear(model,X,Y)
+# plot results 
+plot_results.plot_results_linear(X,Y,model)
+# animation
+plot_results.plot_results_linear_animation(X,Y,model)
 plt.show()

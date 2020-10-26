@@ -12,6 +12,21 @@ class NeuralNetwork:
         self.nlayer = 0
         self.nfeature = nfeature
         self.info = []
+        self.param = []
+
+    def set_param(self,param):
+        for count in range(self.nlayer):
+            self.info[count]["param"]["W"] = param[count]["W"]
+            self.info[count]["param"]["b"] = param[count]["b"]
+
+    def save_param(self):
+        param_layer = []
+        for count in range(self.nlayer):
+            param_layer.append(deepcopy(self.info[count]["param"]))
+        self.param.append(param_layer)
+
+    def get_param_list(self):
+        return self.param
 
     def add_layer(self,nunit,activation):
         if self.nlayer == 0:
@@ -82,10 +97,11 @@ class NeuralNetwork:
             self.info[layer]["param"]["W"] += self.info[layer]["optimizer"]["W"].update(self.get_param(layer,"param_der","W"))
             self.info[layer]["param"]["b"] += self.info[layer]["optimizer"]["b"].update(self.get_param(layer,"param_der","b"))
 
-    def fit(self,X,Y,epochs):
+    def fit(self,X,Y,epochs,verbose=True):
         # iterate over epochs
         loss = []
         accuracy = []
+        self.save_param()
         for epoch in range(epochs):
             self.forward_propagate(X)
             self.back_propagate(X,Y)
@@ -93,7 +109,9 @@ class NeuralNetwork:
             Y_pred = self.predict(X)
             loss.append(self.compute_loss(Y))
             accuracy.append(self.accuracy(Y,Y_pred))
-            print("Epoch: {} - Loss: {} - Accuracy: {}".format(epoch+1,loss[epoch],accuracy[epoch]))
+            if verbose:
+                print("Epoch: {} - Loss: {} - Accuracy: {}".format(epoch+1,loss[epoch],accuracy[epoch]))
+            self.save_param()
         return {"loss":loss,"accuracy":accuracy}
 
     def predict(self,X):
