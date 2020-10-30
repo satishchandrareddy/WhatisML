@@ -37,7 +37,7 @@ def plot_results_linear(Xtrain,Ytrain,model):
     plt.ylim(0,1)
     plt.title("Linear Regression")
     plt.plot(np.squeeze(Xtrain),np.squeeze(Ytrain),"bo",label="Training Data")
-    plt.plot(np.squeeze(Xtest),np.squeeze(Ytest_pred),"r-",label="Machine Learning Prediction")
+    plt.plot(np.squeeze(Xtest),np.squeeze(Ytest_pred),"r-",linewidth = 3, label="Machine Learning Prediction")
     plt.plot(np.squeeze(Xtest),np.squeeze(Ynorm),"k-",label="Normal Equation Prediction")
     plt.legend(loc = "upper left")
 
@@ -68,16 +68,17 @@ def plot_results_linear_animation(Xtrain,Ytrain,model):
     normal, = plt.plot(np.squeeze(Xtest),np.squeeze(Ynorm),"k-",linewidth=3,label="Normal Equation Prediction")
     model.set_param(param_list[0])
     Ymodel = model.predict(Xtest)
-    ml, =plt.plot(np.squeeze(Xtest),np.squeeze(Ymodel),"r-",linewidth=3,label="Machine Learning Prediction")
+    ml, = plt.plot(np.squeeze(Xtest),np.squeeze(Ymodel),"r-",linewidth=3,label="Machine Learning Prediction")
     plt.legend(loc="upper left")
     for param in param_list:
         model.set_param(param)
         Ymodel = model.predict(Xtest)
         ml, = plt.plot(np.squeeze(Xtest),np.squeeze(Ymodel),"r-",linewidth=3,label="Machine Learning Prediction")
+
         list_components = [train,normal,ml]
         container.append(list_components)
     # create animation
-    ani = animation.ArtistAnimation(fig,container,interval=400,repeat_delay=500,repeat=True,blit=True)
+    ani = animation.ArtistAnimation(fig,container,interval=400,repeat=False,blit=True)
     # create mp4 version of animation - need to install ffmpeg 
     # look up on internet for intallation instructions
     #ani.save('LinearRegression.mp4', writer='ffmpeg')

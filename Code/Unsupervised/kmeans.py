@@ -7,13 +7,14 @@ import matplotlib.animation as animation
 import matplotlib.pyplot as plt
 import numpy as np
 
-class cluster:
+class kmeans:
     def __init__(self,nfeature,ncluster):
-        self.mean = 0.02*np.random.randn(nfeature,ncluster)
+        self.mean = 0.3*np.random.randn(nfeature,ncluster)
         self.nfeature = nfeature
         self.ncluster = ncluster
         self.meansave = [deepcopy(self.mean)]
         self.clustersave = []
+        self.list_objective = []
 
     def compute_distance(self):
         nsample = self.X.shape[1]
@@ -22,8 +23,11 @@ class cluster:
             self.X_dist[i,:] = np.sum(np.square(self.X-self.mean[:,i:i+1]),axis=0)
 
     def determine_cluster(self):
-        self.cluster = np.argmax(-self.X_dist,axis=0)
+        self.cluster = np.argmin(self.X_dist,axis=0)
         self.clustersave.append(deepcopy(self.cluster))
+        objective = np.sum(np.min(self.X_dist,axis=0))
+        self.list_objective.append(objective)
+        return objective
 
     def predict(self):
         self.compute_distance()
@@ -55,7 +59,8 @@ class cluster:
             # compute distances to all cluster means
             self.compute_distance()
             # determine cluster
-            self.determine_cluster()
+            objective = self.determine_cluster()
+            print("Iteration: {}  Objective Function: {}".format(i,objective))
             # update_mean
             self.update_mean()
             diff = self.check_diff()
@@ -65,6 +70,13 @@ class cluster:
 
     def get_meansave(self):
         return self.meansave
+
+    def plot_objective(self):
+        fig = plt.subplots(1,1)
+        list_iteration = list(range(1,1+len(self.list_objective)))
+        plt.plot(list_iteration,self.list_objective,'b-')
+        plt.xlabel("Iteration")
+        plt.ylabel("Objective Function")
 
     def plot_results_animation(self,X):
         list_color = ["k", "r", "g", "m", "c"]
@@ -99,7 +111,7 @@ class cluster:
         ani = animation.ArtistAnimation(fig,container, repeat = False, interval=1000, blit=True)
         # uncomment to create mp4 
         # need to have ffmpeg installed on your machine - search for ffmpeg on internet to get detaisl
-        #ani.save('cluster.mp4', writer='ffmpeg')
+        # ani.save('cluster.mp4', writer='ffmpeg')
 
 # this function is not part of the class is used for plotting
 def plot_data(X,**kwargs):
