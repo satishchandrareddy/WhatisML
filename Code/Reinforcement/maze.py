@@ -170,7 +170,6 @@ class maze:
         plt.plot(array_episode,array_reward,"b-")
         plt.xlabel("Episode")
         plt.ylabel("Number of Moves")
-        plt.show()
 
     def plot_strategy_animation(self):
         nframe = len(self.valuesave)
@@ -217,7 +216,7 @@ class maze:
 
         # you need to set blit=False, or the first set of arrows never gets # cleared on subsequent frames
         ani = animation.FuncAnimation(fig, update_quiver, frames=nframe, fargs=(Q,Usave,Vsave),
-                               repeat = False, interval=200, blit=False)
+                               repeat = False, interval=100, blit=False)
         fig.tight_layout()
         # uncomment to create mp4 
         # need to have ffmpeg installed on your machine - search for ffmpeg to get detaisl

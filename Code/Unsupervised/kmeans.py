@@ -108,21 +108,7 @@ class kmeans:
                 out, = plt.plot(self.meansave[count][0,cluster],self.meansave[count][1,cluster],color=list_color[cluster],marker ="s", markersize=8)
                 frame.append(out)
             container.append(frame)
-        ani = animation.ArtistAnimation(fig,container, repeat = False, interval=1000, blit=True)
+        ani = animation.ArtistAnimation(fig,container, repeat = False, interval=500, blit=True)
         # uncomment to create mp4 
         # need to have ffmpeg installed on your machine - search for ffmpeg on internet to get detaisl
         # ani.save('cluster.mp4', writer='ffmpeg')
-
-# this function is not part of the class is used for plotting
-def plot_data(X,**kwargs):
-        plt.figure()
-        plt.plot(X[0,:],X[1,:],"bo",markersize=4)
-        symbol = ["ks", "rs", "gs", "cs"]
-        if "mean" in kwargs:
-            mean = kwargs["mean"]
-            ncluster = mean.shape[1]
-            for count in range(ncluster):
-                plt.plot(mean[0,count],mean[1,count],symbol[count],markersize=8)
-        plt.xlabel("X0")
-        plt.ylabel("X1")
-        plt.title("Data")

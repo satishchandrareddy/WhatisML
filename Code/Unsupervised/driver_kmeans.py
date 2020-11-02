@@ -4,6 +4,7 @@ import create_data_cluster
 import kmeans
 import matplotlib.pyplot as plt
 import numpy as np
+import plot_data
 
 # (1) generate data
 # comment out seed line to generate different sets of random numbers
@@ -21,9 +22,9 @@ model.fit(X,nepoch)
 
 # (4) plot results
 model.plot_objective()
+# plot initial and final results
+plot_data.plot_data2d(X,mean=model.get_meansave()[0])
+plot_data.plot_data2d(X,mean=model.get_meansave()[-1])
 # animation
 model.plot_results_animation(X)
-# plot results
-kmeans.plot_data(X,mean=model.get_meansave()[0])
-kmeans.plot_data(X,mean=model.get_meansave()[-1])
 plt.show()

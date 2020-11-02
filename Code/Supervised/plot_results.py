@@ -78,7 +78,7 @@ def plot_results_linear_animation(Xtrain,Ytrain,model):
         list_components = [train,normal,ml]
         container.append(list_components)
     # create animation
-    ani = animation.ArtistAnimation(fig,container,interval=400,repeat=False,blit=True)
+    ani = animation.ArtistAnimation(fig,container,interval=200,repeat=False,blit=True)
     # create mp4 version of animation - need to install ffmpeg 
     # look up on internet for intallation instructions
     #ani.save('LinearRegression.mp4', writer='ffmpeg')
@@ -157,7 +157,7 @@ def plot_results_classification_animation(Xtrain,Ytrain,model,nclass=2):
         frame.insert(0,heatmap)
         container.append(frame)
     plt.colorbar()
-    ani = animation.ArtistAnimation(fig,container,interval=200,repeat_delay=1000,blit=True)
+    ani = animation.ArtistAnimation(fig,container,interval=100,repeat_delay=1000,blit=True)
     # create mp4 version of animation - need to install ffmpeg 
     # look up on internet for intallation instructions
     #ani.save('sample.mp4', writer='ffmpeg')

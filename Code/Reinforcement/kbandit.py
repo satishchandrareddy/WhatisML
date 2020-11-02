@@ -101,7 +101,7 @@ def plot_results_bar_animation1(epsilon,results):
         frame = [title]
         frame.extend(list(bars))
         list_frame.append(frame)
-    ani = animation.ArtistAnimation(fig,list_frame,interval=10,repeat=True,blit=False)
+    ani = animation.ArtistAnimation(fig,list_frame,interval=4,repeat=True,blit=False)
     plt.show()
 
 def plot_results_bar_animation(list_epsilon,list_results):

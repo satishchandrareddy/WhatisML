@@ -2,7 +2,7 @@
 
 import matplotlib.pyplot as plt
 import numpy as np
-import kmeans
+import plot_data
 
 def create_data_cluster(nfeature,nsample,ncluster,std=1):
 	# generate means
@@ -15,9 +15,9 @@ def create_data_cluster(nfeature,nsample,ncluster,std=1):
 	
 if __name__ == "__main__":
 	nfeature = 2
-	nsample = 30
+	nsample = 200
 	ncluster = 3
 	std = 0.5
 	X,mean = create_data_cluster(nfeature,nsample,ncluster,std)
-	kmeans.plot_data(X,mean=mean)
+	plot_data.plot_data2d(X,mean=mean)
 	plt.show()

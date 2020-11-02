@@ -13,6 +13,7 @@ model = maze.maze(width,height,epsilon)
 nepisode = 100
 # sarsa
 alpha = 1
+# sarsa method
 #model.sarsa(nepisode,alpha)
 # q-learning
 model.qlearning(nepisode,alpha)
@@ -21,3 +22,4 @@ model.qlearning(nepisode,alpha)
 # (3) plot results
 model.plot_reward()
 model.plot_strategy_animation()
+plt.show()
