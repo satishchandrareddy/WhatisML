@@ -142,7 +142,6 @@ def plot_results_classification_animation(Xtrain,Ytrain,model,nclass=2):
     fig,ax = plt.subplots()
     plt.xlabel("X0")
     plt.ylabel("X1")
-    plt.title("Classification")
     plt.xlim(-2,2)
     plt.ylim(-2,2)
     container = []
@@ -160,4 +159,46 @@ def plot_results_classification_animation(Xtrain,Ytrain,model,nclass=2):
     ani = animation.ArtistAnimation(fig,container,interval=100,repeat_delay=1000,blit=True)
     # create mp4 version of animation - need to install ffmpeg 
     # look up on internet for intallation instructions
-    #ani.save('sample.mp4', writer='ffmpeg')
+    #ani.save('classification.mp4', writer='ffmpeg')
+
+def plot_data_mnist(X,Y):
+    # create 5x5 subplot of mnist images
+    nrow = 5
+    ncol = 5
+    npixel_width = 28
+    npixel_height = 28
+    fig,ax = plt.subplots(nrow,ncol,sharex="col",sharey="row")
+    fig.suptitle("Images of Sample MNIST Digits")
+    idx = 0
+    for row in range(nrow):
+        for col in range(ncol):
+            digit_image = np.flipud(np.reshape(X[:,idx],(npixel_width,npixel_height)))
+            ax[row,col].pcolormesh(digit_image,cmap="Greys")
+            idx +=1
+
+def plot_results_mnist_animation(X,Y,Y_pred,nframe):
+    # number of data points
+    m = X.shape[1]
+    # determine number of frames
+    nplot = min(m,nframe)
+    # set up plot
+    fig, ax = plt.subplots()
+    # create 1-d grids for x and and y directions
+    npixel_width = 28
+    npixel_height = 28
+    # list of frames
+    container = []
+    for idx in range(nplot):
+        # digit plot - need flipud or else image will be upside down
+        digit_image = np.flipud(np.reshape(X[:,idx],(npixel_width,npixel_height)))
+        pc = ax.pcolormesh(digit_image,cmap="Greys",animated=True)
+        digit_title = ax.text(14,28.3,"Image: {0}     Actual: {1}   Predicted: {2}".format(idx,Y[0,idx],Y_pred[0,idx]),
+             size=10,ha="center", animated=True)
+        # append image/title to container
+        container.append([pc, digit_title])
+
+    ani = animation.ArtistAnimation(fig,container,interval=500,repeat=False,blit=False)
+     # create mp4 version of animation - need to install ffmpeg 
+    # look up on internet for intallation instructions
+    ani.save('mnist.mp4', writer='ffmpeg')
+    plt.show()

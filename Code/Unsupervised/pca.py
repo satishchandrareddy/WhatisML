@@ -19,13 +19,3 @@ class pca:
         reduced_dim = np.size(cumulative_variance_capture)
         print("Reduced dimension for {} variance capture: {}".format(self.variance_capture,reduced_dim))
         return np.expand_dims(s[0:reduced_dim],axis=1)*vh[0:reduced_dim,:]
-
-if __name__ == "__main__":
-    # load mnist data set
-    X,_,_,_ = load_mnist.load_mnist(6000,1000)
-    # subtract mean
-    X = X - np.mean(X,axis=1,keepdims=True)
-    # perform pca
-    variance_capture = 0.99
-    model = pca(variance_capture)
-    reduced_X = model.compute_reduced(X)

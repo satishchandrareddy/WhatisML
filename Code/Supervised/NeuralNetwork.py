@@ -130,3 +130,15 @@ class NeuralNetwork:
             return np.mean(np.absolute(Y-Y_pred)<1e-7)
         elif self.loss == "crossentropy":
             return np.mean(np.absolute(Y-Y_pred)<1e-7)
+
+    def summary(self):
+        print(" ")
+        print("Layer\tUnits In\tUnits Out\tParameters")
+        nparameter_total = 0
+        for layer in range(self.nlayer):
+            nparameter = (self.info[layer]["nIn"]+1)*self.info[layer]["nOut"]
+            nparameter_total += nparameter
+            print("{}\t{}\t\t{}\t\t{}".format(layer+1,self.info[layer]["nIn"],self.info[layer]["nOut"],nparameter))
+        print
+        print("Total parameters: {}".format(nparameter_total))
+        print(" ")
