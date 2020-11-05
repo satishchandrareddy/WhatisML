@@ -32,6 +32,6 @@ plot_results.plot_results_history(history,["loss"])
 # plot data
 plot_results.plot_results_data(X,Y,nclass)
 # plot heatmap in x0-x1 plane
-plot_results.plot_results_classification(X,Y,model,nclass)
+# plot_results.plot_results_classification(X,Y,model,nclass)
 plot_results.plot_results_classification_animation(X,Y,model,nclass)
 plt.show()

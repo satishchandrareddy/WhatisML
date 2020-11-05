@@ -41,6 +41,7 @@ def plot_results_linear(Xtrain,Ytrain,model):
     plt.plot(np.squeeze(Xtest),np.squeeze(Ynorm),"k-",label="Normal Equation Prediction")
     plt.legend(loc = "upper left")
 
+
 def plot_results_linear_animation(Xtrain,Ytrain,model):
     X0 = Xtrain[0,:]
     X0min = np.min(X0)
@@ -55,33 +56,41 @@ def plot_results_linear_animation(Xtrain,Ytrain,model):
     Ynorm = W*Xtest+b
     # generate plots of machine learning prediction and create container of plots
     param_list = model.get_param_list()
-    container = []
     fig,ax=plt.subplots()
-    plt.xlabel("X")
-    plt.ylabel("Y")
-    plt.xlim(0,1)
-    plt.ylim(0,1)
-    plt.title("Linear Regression")
-     # get plot of training data
-    train, = plt.plot(np.squeeze(Xtrain),np.squeeze(Ytrain),"bo",markersize=5,label="Training Data")
+    ax.set_xlabel("X")
+    ax.set_ylabel("Y")
+    ax.set_xlim(0,1)
+    ax.set_ylim(0,1)
+    ax.set_title("Linear Regression")
+    # get plot of training data
+    #train, = ax.plot(np.squeeze(Xtrain),np.squeeze(Ytrain),"bo",markersize=5,label="Training Data")
+    ax.scatter(np.squeeze(Xtrain),np.squeeze(Ytrain), c="blue", s=15, label="Training Data")
     # get plot of normal equations solution
-    normal, = plt.plot(np.squeeze(Xtest),np.squeeze(Ynorm),"k-",linewidth=3,label="Normal Equation Prediction")
+    #normal, = ax.plot(np.squeeze(Xtest),np.squeeze(Ynorm),"k-",linewidth=3,label="Normal Equation Prediction")
     model.set_param(param_list[0])
     Ymodel = model.predict(Xtest)
+    epoch_label = ax.text(0.92,1.02,"",
+                 size=12,ha="center", animated=False)
     ml, = plt.plot(np.squeeze(Xtest),np.squeeze(Ymodel),"r-",linewidth=3,label="Machine Learning Prediction")
-    plt.legend(loc="upper left")
-    for param in param_list:
-        model.set_param(param)
+    ax.legend(loc="upper left")
+    
+    # function to update animation
+    def animate(i):
+        model.set_param(param_list[i])
         Ymodel = model.predict(Xtest)
-        ml, = plt.plot(np.squeeze(Xtest),np.squeeze(Ymodel),"r-",linewidth=3,label="Machine Learning Prediction")
+        epoch_label.set_text(f"Epoch: {i}")
+        ml.set_data(np.squeeze(Xtest), np.squeeze(Ymodel))
+        return epoch_label, ml
 
-        list_components = [train,normal,ml]
-        container.append(list_components)
+    n_epochs = len(param_list)
     # create animation
-    ani = animation.ArtistAnimation(fig,container,interval=200,repeat=False,blit=True)
+    ani = animation.FuncAnimation(fig, animate,
+                               frames=n_epochs, interval=100, blit=True)
+   
     # create mp4 version of animation - need to install ffmpeg 
     # look up on internet for intallation instructions
-    #ani.save('LinearRegression.mp4', writer='ffmpeg')
+    ani.save('LinearRegression.mp4', writer='ffmpeg')
+
 
 def plot_results_classification(Xtrain,Ytrain,model,nclass=2):
     plot_results_data(Xtrain,Ytrain,nclass)
@@ -144,22 +153,36 @@ def plot_results_classification_animation(Xtrain,Ytrain,model,nclass=2):
     plt.ylabel("X1")
     plt.xlim(-2,2)
     plt.ylim(-2,2)
-    container = []
-    for param in param_list:
-        # plot training data
-        frame = plot_scatter(Xtrain,Ytrain,nclass)
-        # predict results (concatenated x0 and x1 1-d grids to create feature matrix)
-        model.set_param(param)
+    
+    scatter = plot_scatter(Xtrain,Ytrain,nclass)
+    legend = plt.legend(loc="upper left")
+    epoch_label = ax.text(1.58,2.06,f"",
+                 size=12,ha="center", animated=False)
+
+    def init():
+        model.set_param(param_list[0])
         yreshape = model.predict(np.concatenate((x0reshape,x1reshape),axis=0))
         # reshape results into 2d grid and plot heatmap
         heatmap = plt.pcolormesh(x0grid,x1grid,np.reshape(yreshape,(npoints,npoints)))
-        frame.insert(0,heatmap)
-        container.append(frame)
-    plt.colorbar()
-    ani = animation.ArtistAnimation(fig,container,interval=100,repeat_delay=1000,blit=True)
+        plt.colorbar()
+        return heatmap,
+
+    def animate(i):
+        epoch_label.set_text(f"Epoch: {i}")
+        # predict results (concatenated x0 and x1 1-d grids to create feature matrix)
+        model.set_param(param_list[i])
+        yreshape = model.predict(np.concatenate((x0reshape,x1reshape),axis=0))
+        # reshape results into 2d grid and plot heatmap
+        heatmap = plt.pcolormesh(x0grid,x1grid,np.reshape(yreshape,(npoints,npoints)))
+        return epoch_label, heatmap
+
+    n_epochs = len(param_list)
+    # create animation
+    ani = animation.FuncAnimation(fig, animate, init_func=init,
+                               frames=n_epochs, interval=100, blit=True)
     # create mp4 version of animation - need to install ffmpeg 
     # look up on internet for intallation instructions
-    #ani.save('classification.mp4', writer='ffmpeg')
+    ani.save('classification.mp4', writer='ffmpeg')
 
 def plot_data_mnist(X,Y):
     # create 5x5 subplot of mnist images
