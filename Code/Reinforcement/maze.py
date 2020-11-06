@@ -208,11 +208,17 @@ class maze:
         ax.set_xlim(0,self.width)
         ax.set_ylim(0,self.height)
         ax.grid(True)
+        title = ax.set_title("Q Learning Process")
+        # episode_label_posy, episode_label_posx = ax.get_ylim()[1], ax.get_xlim()[1]
+        # episode_label = ax.text(0.895*episode_label_posx, 1.02*episode_label_posy,
+                    # "", size=12, ha="center", animated=False)
         Q = ax.quiver(X, Y, Usave[0], Vsave[0], pivot='tail', color='r', units='inches')
         # frame update function
         def update_quiver(frame,Q,Usave,Vsave):
+            title = ax.set_title(f"Q Learning Process (Episode: {frame})")
+            #episode_label.set_text(f"Episode: {frame}")
             Q.set_UVC(Usave[frame],Vsave[frame])
-            return Q,
+            return Q,title
 
         # you need to set blit=False, or the first set of arrows never gets # cleared on subsequent frames
         ani = animation.FuncAnimation(fig, update_quiver, frames=nframe, fargs=(Q,Usave,Vsave),
@@ -220,5 +226,5 @@ class maze:
         fig.tight_layout()
         # uncomment to create mp4 
         # need to have ffmpeg installed on your machine - search for ffmpeg to get detaisl
-        #ani.save('maze.mp4',writer='ffmpeg')
+        ani.save('maze.mp4',writer='ffmpeg')
         plt.show()

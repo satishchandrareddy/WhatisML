@@ -84,6 +84,9 @@ class kmeans:
         container = []
         original = True
         for count in range(len(self.meansave)):
+            iter_label_posy, iter_label_posx = ax.get_ylim()[1], ax.get_xlim()[1]
+            iteration_label = ax.text(0.85*iter_label_posx, 1.07*iter_label_posy,
+                    "", size=12, ha="center", animated=False)
             # plot data points ----- use separate frame
             ax.set_xlabel("X0")
             ax.set_ylabel("X1")
@@ -101,6 +104,8 @@ class kmeans:
                     idx = np.squeeze(np.where(np.absolute(self.clustersave[count-1] - cluster)<1e-7))
                     clusterdata, = plt.plot(X[0,idx],X[1,idx],symbol,markersize=4)
                     frame.append(clusterdata)
+                    iteration_label.set_text(f"Iteration: {count}")
+                    frame.append(iteration_label)
             container.append(frame)
             # ------
             # plot mean points ----- use separate frame
@@ -111,4 +116,4 @@ class kmeans:
         ani = animation.ArtistAnimation(fig,container, repeat = False, interval=500, blit=True)
         # uncomment to create mp4 
         # need to have ffmpeg installed on your machine - search for ffmpeg on internet to get detaisl
-        # ani.save('cluster.mp4', writer='ffmpeg')
+        ani.save('cluster.mp4', writer='ffmpeg')

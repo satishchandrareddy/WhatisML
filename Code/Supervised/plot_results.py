@@ -61,30 +61,25 @@ def plot_results_linear_animation(Xtrain,Ytrain,model):
     ax.set_ylabel("Y")
     ax.set_xlim(0,1)
     ax.set_ylim(0,1)
-    ax.set_title("Linear Regression")
     # get plot of training data
-    #train, = ax.plot(np.squeeze(Xtrain),np.squeeze(Ytrain),"bo",markersize=5,label="Training Data")
-    ax.scatter(np.squeeze(Xtrain),np.squeeze(Ytrain), c="blue", s=15, label="Training Data")
-    # get plot of normal equations solution
-    #normal, = ax.plot(np.squeeze(Xtest),np.squeeze(Ynorm),"k-",linewidth=3,label="Normal Equation Prediction")
+    train = ax.scatter(np.squeeze(Xtrain),np.squeeze(Ytrain), c="b", marker="o", label="Training Data")
     model.set_param(param_list[0])
     Ymodel = model.predict(Xtest)
-    epoch_label = ax.text(0.92,1.02,"",
-                 size=12,ha="center", animated=False)
-    ml, = plt.plot(np.squeeze(Xtest),np.squeeze(Ymodel),"r-",linewidth=3,label="Machine Learning Prediction")
+    ml = plt.plot(np.squeeze(Xtest),np.squeeze(Ymodel),"r-",linewidth=3,label="Machine Learning Prediction")[0]
+    title = ax.set_title("Linear Regression")
     ax.legend(loc="upper left")
     
-    # function to update animation
-    def animate(i):
+    #function to update animation
+    def animate(i, param_list, Xtest):
         model.set_param(param_list[i])
         Ymodel = model.predict(Xtest)
-        epoch_label.set_text(f"Epoch: {i}")
         ml.set_data(np.squeeze(Xtest), np.squeeze(Ymodel))
-        return epoch_label, ml
+        title = ax.set_title(f"Linear Regression - Epoch: {i}")
+        return ml, title
 
     n_epochs = len(param_list)
     # create animation
-    ani = animation.FuncAnimation(fig, animate,
+    ani = animation.FuncAnimation(fig, animate, fargs=[param_list, Xtest],
                                frames=n_epochs, interval=100, blit=True)
    
     # create mp4 version of animation - need to install ffmpeg 
@@ -156,8 +151,7 @@ def plot_results_classification_animation(Xtrain,Ytrain,model,nclass=2):
     
     scatter = plot_scatter(Xtrain,Ytrain,nclass)
     legend = plt.legend(loc="upper left")
-    epoch_label = ax.text(1.58,2.06,f"",
-                 size=12,ha="center", animated=False)
+    title = ax.set_title("Classification")
 
     def init():
         model.set_param(param_list[0])
@@ -168,13 +162,13 @@ def plot_results_classification_animation(Xtrain,Ytrain,model,nclass=2):
         return heatmap,
 
     def animate(i):
-        epoch_label.set_text(f"Epoch: {i}")
         # predict results (concatenated x0 and x1 1-d grids to create feature matrix)
         model.set_param(param_list[i])
         yreshape = model.predict(np.concatenate((x0reshape,x1reshape),axis=0))
         # reshape results into 2d grid and plot heatmap
         heatmap = plt.pcolormesh(x0grid,x1grid,np.reshape(yreshape,(npoints,npoints)))
-        return epoch_label, heatmap
+        title = ax.set_title(f"Classification - Epoch: {i}")
+        return title, heatmap
 
     n_epochs = len(param_list)
     # create animation
