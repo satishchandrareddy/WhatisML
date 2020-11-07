@@ -216,10 +216,6 @@ class maze:
         # add title and initial strategy
         title = ax.set_title("Q Learning")
         Q = ax.quiver(X, Y, Usave[0], Vsave[0], pivot='tail', color='r', units='inches')
-        # frame update function
-        def update_quiver(frame,Q,Usave,Vsave):
-            title = ax.set_title(f"Q Learning (Episode: {frame})")
-
         # create initial image
         fig, ax = plt.subplots()
         # plot wall:
@@ -247,4 +243,5 @@ class maze:
         # uncomment to create mp4 
         # need to have ffmpeg installed on your machine - search internet for ffmpeg to get details
         #ani.save('maze.mp4',writer='ffmpeg')
-        plt.show()
+        #plt.show()
+        return ani
