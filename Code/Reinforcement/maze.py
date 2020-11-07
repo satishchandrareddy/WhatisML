@@ -212,7 +212,7 @@ class maze:
         Q = ax.quiver(X, Y, Usave[0], Vsave[0], pivot='tail', color='r', units='inches')
         # frame update function
         def update_quiver(frame,Q,Usave,Vsave):
-            title = ax.set_title(f"Q Learning Process -Episode: {frame}")
+            title = ax.set_title(f"Q Learning Process - Episode: {frame}")
             Q.set_UVC(Usave[frame],Vsave[frame])
             return Q, title
 
