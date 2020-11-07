@@ -154,14 +154,11 @@ def plot_results_classification_animation(Xtrain,Ytrain,model,nclass=2):
     scatter = plot_scatter(Xtrain,Ytrain,nclass)
     legend = plt.legend(loc="upper left")
     title = ax.set_title("Classification")
-
-    def init():
-        model.set_param(param_list[0])
-        yreshape = model.predict(np.concatenate((x0reshape,x1reshape),axis=0))
-        # reshape results into 2d grid and plot heatmap
-        heatmap = plt.pcolormesh(x0grid,x1grid,np.reshape(yreshape,(npoints,npoints)))
-        plt.colorbar()
-        return heatmap,
+    model.set_param(param_list[0])
+    yreshape = model.predict(np.concatenate((x0reshape,x1reshape),axis=0))
+    # reshape results into 2d grid and plot heatmap
+    heatmap = plt.pcolormesh(x0grid,x1grid,np.reshape(yreshape,(npoints,npoints)))
+    plt.colorbar()
 
     def animate(i):
         # predict results (concatenated x0 and x1 1-d grids to create feature matrix)
@@ -170,12 +167,12 @@ def plot_results_classification_animation(Xtrain,Ytrain,model,nclass=2):
         # reshape results into 2d grid and plot heatmap
         heatmap = plt.pcolormesh(x0grid,x1grid,np.reshape(yreshape,(npoints,npoints)))
         title = ax.set_title(f"Classification - Epoch: {i}")
-        return title, heatmap
+        return heatmap, title
 
     n_epochs = len(param_list)
     # create animation
-    ani = animation.FuncAnimation(fig, animate, init_func=init,
-                               frames=n_epochs, interval=100, blit=True)
+    ani = animation.FuncAnimation(fig, animate, frames=n_epochs, 
+                                interval=100, blit=True)
     # create mp4 version of animation - need to install ffmpeg 
     # look up on internet for intallation instructions
     # ani.save('classification.mp4', writer='ffmpeg')
