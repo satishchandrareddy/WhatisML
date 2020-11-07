@@ -226,5 +226,6 @@ class maze:
         fig.tight_layout()
         # uncomment to create mp4 
         # need to have ffmpeg installed on your machine - search for ffmpeg to get detaisl
-        ani.save('maze.mp4',writer='ffmpeg')
-        plt.show()
+        # ani.save('maze.mp4',writer='ffmpeg')
+        # plt.show()
+        return ani
