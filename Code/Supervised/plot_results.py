@@ -160,7 +160,7 @@ def plot_results_classification_animation(Xtrain,Ytrain,model,nclass=2):
         yreshape = model.predict(np.concatenate((x0reshape,x1reshape),axis=0))
         # reshape results into 2d grid and plot heatmap
         heatmap = plt.pcolormesh(x0grid,x1grid,np.reshape(yreshape,(npoints,npoints)))
-        plt.colorbar()
+        cl = plt.colorbar()
         return heatmap,
 
     def animate(i):
@@ -170,7 +170,7 @@ def plot_results_classification_animation(Xtrain,Ytrain,model,nclass=2):
         # reshape results into 2d grid and plot heatmap
         heatmap = plt.pcolormesh(x0grid,x1grid,np.reshape(yreshape,(npoints,npoints)))
         title = ax.set_title(f"Classification - Epoch: {i}")
-        return title, heatmap
+        return heatmap, title
 
     n_epochs = len(param_list)
     # create animation
@@ -178,7 +178,7 @@ def plot_results_classification_animation(Xtrain,Ytrain,model,nclass=2):
                                frames=n_epochs, interval=100, blit=True)
     # create mp4 version of animation - need to install ffmpeg 
     # look up on internet for intallation instructions
-    # ani.save('classification.mp4', writer='ffmpeg')
+    ani.save('classification.mp4', writer='ffmpeg')
 
     return ani
 
