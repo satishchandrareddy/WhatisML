@@ -179,7 +179,7 @@ def plot_results_classification_animation(Xtrain,Ytrain,model,nclass=2):
 
     n_epochs = len(param_list)
     # create animation
-    ani = animation.FuncAnimation(fig, animate, init_func=init,
+    ani = animation.FuncAnimation(fig, animate, 
                                frames=n_epochs, interval=100, blit=True)
     # create mp4 version of animation - need to install ffmpeg 
     # look up on internet for intallation instructions
