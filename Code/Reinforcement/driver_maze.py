@@ -10,16 +10,12 @@ height = 5
 epsilon = 0.0
 model = maze.maze(width,height,epsilon)
 # (2) simulate
-nepisode = 100
-# sarsa
+nepisode = 80
 alpha = 1
-# sarsa method
-#model.sarsa(nepisode,alpha)
-# q-learning
 model.qlearning(nepisode,alpha)
-# expected sarsa
-#model.expectedsarsa(nepisode,alpha)
 # (3) plot results
-model.plot_reward()
+# number of steps for each episode
+model.plot_steps()
+# animation of strategy
 model.plot_strategy_animation()
 plt.show()

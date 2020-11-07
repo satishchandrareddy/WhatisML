@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 list_epsilon = [0,0.1]
 k = 10
 nsim = 1000
-nstep = 250
+nstep = 150
 seed = 10
 # simulate
 list_na, list_reward = kbandit.run(list_epsilon,k,nsim,nstep,seed)

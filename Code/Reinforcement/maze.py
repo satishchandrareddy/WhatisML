@@ -163,13 +163,28 @@ class maze:
             self.rewardsave.append(deepcopy(reward_sum))
             self.valuesave.append(deepcopy(self.value))
     	    	
-    def plot_reward(self):
+    def plot_steps(self):
         plt.figure()
         array_episode = np.arange(1,np.size(self.rewardsave)+1)
         array_reward = -np.array(self.rewardsave)
         plt.plot(array_episode,array_reward,"b-")
         plt.xlabel("Episode")
-        plt.ylabel("Number of Moves")
+        plt.ylabel("Number of Steps from Start to End")
+
+    def plot_maze(self):
+        # create initial image
+        fig, ax = plt.subplots()
+        # plot wall:
+        ax.plot([self.width-2,self.width-2],[1,self.height],"k-",lw=2)
+        ax.plot([self.width-1,self.width-1],[0,self.height-1],"k-",lw=2)
+        ax.text(0.3,self.height-0.3,"Start",size=15)
+        ax.text(self.width - 0.7, 0.5, "End", size=15)
+        ax.yaxis.set_ticklabels([])
+        ax.xaxis.set_ticklabels([])
+        ax.set_xlim(0,self.width)
+        ax.set_ylim(0,self.height)
+        ax.grid(True)
+        return fig,ax
 
     def plot_strategy_animation(self):
         nframe = len(self.valuesave)
@@ -196,35 +211,22 @@ class maze:
                 V[4*state + action] = action_Y[action]
             Usave.append(deepcopy(U)), Vsave.append(np.array(V))
 
-        # create initial image
-        fig, ax = plt.subplots()
-        # plot wall:
-        ax.plot([self.width-2,self.width-2],[1,self.height],"k-")
-        ax.plot([self.width-1,self.width-1],[0,self.height-1],"k-")
-        ax.text(0.3,self.height-0.3,"Start",size=15)
-        ax.text(self.width - 0.7, 0.5, "End", size=15)
-        ax.yaxis.set_ticklabels([])
-        ax.xaxis.set_ticklabels([])
-        ax.set_xlim(0,self.width)
-        ax.set_ylim(0,self.height)
-        ax.grid(True)
-        title = ax.set_title("Q Learning Process")
-        # episode_label_posy, episode_label_posx = ax.get_ylim()[1], ax.get_xlim()[1]
-        # episode_label = ax.text(0.895*episode_label_posx, 1.02*episode_label_posy,
-                    # "", size=12, ha="center", animated=False)
+        # create blank maze
+        fig,ax = self.plot_maze()
+        # add title and initial strategy
+        title = ax.set_title("Q Learning")
         Q = ax.quiver(X, Y, Usave[0], Vsave[0], pivot='tail', color='r', units='inches')
         # frame update function
         def update_quiver(frame,Q,Usave,Vsave):
-            title = ax.set_title(f"Q Learning Process (Episode: {frame})")
-            #episode_label.set_text(f"Episode: {frame}")
+            title = ax.set_title(f"Q Learning (Episode: {frame})")
             Q.set_UVC(Usave[frame],Vsave[frame])
             return Q,title
 
-        # you need to set blit=False, or the first set of arrows never gets # cleared on subsequent frames
+        # you need to set blit=False, or the first set of arrows never gets cleared on subsequent frames
         ani = animation.FuncAnimation(fig, update_quiver, frames=nframe, fargs=(Q,Usave,Vsave),
-                               repeat = False, interval=100, blit=False)
+                               repeat = False, interval=200, blit=False)
         fig.tight_layout()
         # uncomment to create mp4 
         # need to have ffmpeg installed on your machine - search for ffmpeg to get detaisl
-        ani.save('maze.mp4',writer='ffmpeg')
+        #ani.save('maze.mp4',writer='ffmpeg')
         plt.show()
