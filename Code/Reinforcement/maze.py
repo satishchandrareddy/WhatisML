@@ -213,21 +213,6 @@ class maze:
             
         # create blank maze
         fig,ax = self.plot_maze()
-        # add title and initial strategy
-        title = ax.set_title("Q Learning")
-        Q = ax.quiver(X, Y, Usave[0], Vsave[0], pivot='tail', color='r', units='inches')
-        # create initial image
-        fig, ax = plt.subplots()
-        # plot wall:
-        ax.plot([self.width-2,self.width-2],[1,self.height],"k-")
-        ax.plot([self.width-1,self.width-1],[0,self.height-1],"k-")
-        ax.text(0.3,self.height-0.3,"Start",size=15)
-        ax.text(self.width - 0.7, 0.5, "End", size=15)
-        ax.yaxis.set_ticklabels([])
-        ax.xaxis.set_ticklabels([])
-        ax.set_xlim(0,self.width)
-        ax.set_ylim(0,self.height)
-        ax.grid(True)
         title = ax.set_title("Q Learning Process")
         Q = ax.quiver(X, Y, Usave[0], Vsave[0], pivot='tail', color='r', units='inches')
         # frame update function
@@ -243,5 +228,4 @@ class maze:
         # uncomment to create mp4 
         # need to have ffmpeg installed on your machine - search internet for ffmpeg to get details
         #ani.save('maze.mp4',writer='ffmpeg')
-        #plt.show()
         return ani
