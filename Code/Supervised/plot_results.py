@@ -178,7 +178,7 @@ def plot_results_classification_animation(Xtrain,Ytrain,model,nclass=2):
                                frames=n_epochs, interval=100, blit=True)
     # create mp4 version of animation - need to install ffmpeg 
     # look up on internet for intallation instructions
-    ani.save('classification.mp4', writer='ffmpeg')
+    #ani.save('classification.mp4', writer='ffmpeg')
 
     return ani
 
