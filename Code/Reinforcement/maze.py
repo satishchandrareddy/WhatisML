@@ -1,7 +1,7 @@
 # maze.py
 #
-# cliff problem
-# -Sarsa using epsilon-greedy
+# maze problem
+# - Q Learning using epsilon-greedy
 
 from copy import deepcopy
 from matplotlib import animation
@@ -210,8 +210,7 @@ class maze:
                 U[4*state + action] = action_X[action]
                 V[4*state + action] = action_Y[action]
             Usave.append(deepcopy(U)), Vsave.append(np.array(V))
-
-<<<<<<< HEAD
+            
         # create blank maze
         fig,ax = self.plot_maze()
         # add title and initial strategy
@@ -220,7 +219,7 @@ class maze:
         # frame update function
         def update_quiver(frame,Q,Usave,Vsave):
             title = ax.set_title(f"Q Learning (Episode: {frame})")
-=======
+
         # create initial image
         fig, ax = plt.subplots()
         # plot wall:
@@ -238,7 +237,6 @@ class maze:
         # frame update function
         def update_quiver(frame,Q,Usave,Vsave):
             title = ax.set_title(f"Q Learning Process - Episode: {frame}")
->>>>>>> 244a6d65c62dc36e0c1711cc29c0ea021d143f7f
             Q.set_UVC(Usave[frame],Vsave[frame])
             return Q, title
 
@@ -247,12 +245,6 @@ class maze:
                                repeat = False, interval=200, blit=False)
         fig.tight_layout()
         # uncomment to create mp4 
-        # need to have ffmpeg installed on your machine - search for ffmpeg to get detaisl
-<<<<<<< HEAD
+        # need to have ffmpeg installed on your machine - search internet for ffmpeg to get details
         #ani.save('maze.mp4',writer='ffmpeg')
         plt.show()
-=======
-        # ani.save('maze.mp4',writer='ffmpeg')
-        # plt.show()
-        return ani
->>>>>>> 244a6d65c62dc36e0c1711cc29c0ea021d143f7f
