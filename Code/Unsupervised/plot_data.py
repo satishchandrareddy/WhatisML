@@ -13,6 +13,6 @@ def plot_data2d(X,**kwargs):
         ncluster = mean.shape[1]
         for count in range(ncluster):
             plt.plot(mean[0,count],mean[1,count],symbol[count],markersize=8)
-    plt.xlabel("X0")
-    plt.ylabel("X1")
+    plt.xlabel("Relative Salary")
+    plt.ylabel("Relative Purchases")
     plt.title("Data")

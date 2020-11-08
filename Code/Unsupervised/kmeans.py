@@ -78,6 +78,22 @@ class kmeans:
         plt.xlabel("Iteration")
         plt.ylabel("Objective Function")
 
+    def plot_cluster(self,X):
+        # plot final clusters and means
+        list_color = ["k", "r", "g", "m", "c"]
+        fig,ax = plt.subplots(1,1)
+        # plot data points separate color for each cluster
+        ax.set_xlabel("Relative Salary")
+        ax.set_ylabel("Relative Purchases")
+        ax.set_title("Clusters")
+        for cluster in range(self.ncluster):
+            # plot cluster data
+            symbol = list_color[cluster] + "o"
+            idx = np.squeeze(np.where(np.absolute(self.clustersave[-1] - cluster)<1e-7))
+            clusterdata, = plt.plot(X[0,idx],X[1,idx],symbol,markersize=4)
+            # plot mean points 
+            out, = plt.plot(self.meansave[-1][0,cluster],self.meansave[-1][1,cluster],color=list_color[cluster],marker ="s", markersize=8)
+
     def plot_results_animation(self,X):
         list_color = ["k", "r", "g", "m", "c"]
         fig,ax = plt.subplots(1,1)
@@ -88,9 +104,9 @@ class kmeans:
             iteration_label = ax.text(0.85*iter_label_posx, 1.07*iter_label_posy,
                     "", size=12, ha="center", animated=False)
             # plot data points ----- use separate frame
-            ax.set_xlabel("X0")
-            ax.set_ylabel("X1")
-            ax.set_title("Evolution of Cluster Means")
+            ax.set_xlabel("Relative Salary")
+            ax.set_ylabel("Relative Purchases")
+            ax.set_title("Clusters")
             frame = []
             if original:
                 # plot original data points in a single colour
@@ -113,7 +129,7 @@ class kmeans:
                 out, = plt.plot(self.meansave[count][0,cluster],self.meansave[count][1,cluster],color=list_color[cluster],marker ="s", markersize=8)
                 frame.append(out)
             container.append(frame)
-        ani = animation.ArtistAnimation(fig,container, repeat = False, interval=500, blit=True)
+        ani = animation.ArtistAnimation(fig,container, repeat = False, interval=350, blit=True)
         # uncomment to create mp4 
         # need to have ffmpeg installed on your machine - search for ffmpeg on internet to get detaisl
         # ani.save('cluster.mp4', writer='ffmpeg')

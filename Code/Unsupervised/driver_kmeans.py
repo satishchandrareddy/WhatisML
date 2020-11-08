@@ -22,9 +22,12 @@ model.fit(X,nepoch)
 
 # (4) plot results
 model.plot_objective()
-# plot initial and final results
+# plot initial data
+plot_data.plot_data2d(X)
+# plot initial data with initial means
 plot_data.plot_data2d(X,mean=model.get_meansave()[0])
-plot_data.plot_data2d(X,mean=model.get_meansave()[-1])
+# plot final clusters
+model.plot_cluster(X)
 # animation
 model.plot_results_animation(X)
 plt.show()
