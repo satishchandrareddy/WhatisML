@@ -32,5 +32,5 @@ if __name__ == "__main__":
 	case = "ring"
 	nclass = 2
 	X,Y = example(nfeature,m,case,nclass)
-	plot_results.plot_results_data((X,Y),nclass)
+	plot_results.plot_results_data(X,Y,nclass)
 	plt.show()

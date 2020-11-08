@@ -10,57 +10,35 @@ def plot_results_history(history,key_list):
     for count in range(len(key_list)):
         epoch_list = list(range(1,len(history[key_list[count]])+1))
         plt.plot(epoch_list,history[key_list[count]],linemarker[count],label=key_list[count])
-    plt.xlabel("Epoch")
+    plt.xlabel("Iteration")
     plt.ylabel(",".join(key_list))
     plt.title(",".join(key_list))
     plt.legend(loc="upper right")
 
 def plot_results_linear(Xtrain,Ytrain,model):
-    # plot training data, normal equations solution, machine learning solution
+    # plot training data and  machine learning solution
     # determine machine learning prediction
-    X0 = Xtrain[0,:]
-    X0min = np.min(X0)
-    X0max = np.max(X0)
-    Xtest = np.array([[X0min,X0max]])
+    Xtest = np.array([[np.min(Xtrain[0,:]),np.max(Xtrain[0,:])]])
     Ytest_pred = model.predict(Xtest)
-    # normal equation solution
-    Xb = np.concatenate((Xtrain,np.ones(Ytrain.shape)),axis=0)
-    Wb = np.dot(np.dot(Ytrain,Xb.T),np.linalg.inv(np.dot(Xb,Xb.T)))
-    W = Wb[0,0]
-    b = Wb[0,1]
-    Ynorm = W*Xtest+b
     # plot results
     plt.figure()
-    plt.xlabel("X")
-    plt.ylabel("Y")
-    plt.xlim(0,1)
-    plt.ylim(0,1)
+    plt.xlabel("House Area (1000s sq ft)")
+    plt.ylabel("House Price (millions $)")
     plt.title("Linear Regression")
     plt.plot(np.squeeze(Xtrain),np.squeeze(Ytrain),"bo",label="Training Data")
     plt.plot(np.squeeze(Xtest),np.squeeze(Ytest_pred),"r-",linewidth = 3, label="Machine Learning Prediction")
-    plt.plot(np.squeeze(Xtest),np.squeeze(Ynorm),"k-",label="Normal Equation Prediction")
     plt.legend(loc = "upper left")
 
-
 def plot_results_linear_animation(Xtrain,Ytrain,model):
-    X0 = Xtrain[0,:]
-    X0min = np.min(X0)
-    X0max = np.max(X0)
-    Xtest = np.array([[X0min,X0max]])
+    # plot training data and  machine learning solution
+    # determine machine learning prediction
+    Xtest = np.array([[np.min(Xtrain[0,:]),np.max(Xtrain[0,:])]])
     Ytest_pred = model.predict(Xtest)
-    # normal equation solution
-    Xb = np.concatenate((Xtrain,np.ones(Ytrain.shape)),axis=0)
-    Wb = np.dot(np.dot(Ytrain,Xb.T),np.linalg.inv(np.dot(Xb,Xb.T)))
-    W = Wb[0,0]
-    b = Wb[0,1]
-    Ynorm = W*Xtest+b
     # generate plots of machine learning prediction and create container of plots
     param_list = model.get_param_list()
     fig,ax=plt.subplots()
-    ax.set_xlabel("X")
-    ax.set_ylabel("Y")
-    ax.set_xlim(0,1)
-    ax.set_ylim(0,1)
+    ax.set_xlabel("House Area (1000s sq ft)")
+    ax.set_ylabel("House Price (millions $)")
     # get plot of training data
     train = ax.scatter(np.squeeze(Xtrain),np.squeeze(Ytrain), c="b", marker="o", label="Training Data")
     model.set_param(param_list[0])
@@ -74,7 +52,7 @@ def plot_results_linear_animation(Xtrain,Ytrain,model):
         model.set_param(param_list[i])
         Ymodel = model.predict(Xtest)
         ml.set_data(np.squeeze(Xtest), np.squeeze(Ymodel))
-        title = ax.set_title(f"Linear Regression - Epoch: {i}")
+        title = ax.set_title(f"Linear Regression - Iteration: {i}")
         return ml, title
 
     n_epochs = len(param_list)
@@ -166,7 +144,7 @@ def plot_results_classification_animation(Xtrain,Ytrain,model,nclass=2):
         yreshape = model.predict(np.concatenate((x0reshape,x1reshape),axis=0))
         # reshape results into 2d grid and plot heatmap
         heatmap = plt.pcolormesh(x0grid,x1grid,np.reshape(yreshape,(npoints,npoints)))
-        title = ax.set_title(f"Classification - Epoch: {i}")
+        title = ax.set_title(f"Classification - Iteration: {i}")
         return heatmap, title
 
     n_epochs = len(param_list)
@@ -216,7 +194,7 @@ def plot_results_mnist_animation(X,Y,Y_pred,nframe):
         container.append([pc, digit_title])
 
     ani = animation.ArtistAnimation(fig,container,interval=500,repeat=False,blit=False)
-     # create mp4 version of animation - need to install ffmpeg 
+    # create mp4 version of animation - need to install ffmpeg 
     # look up on internet for intallation instructions
-    ani.save('mnist.mp4', writer='ffmpeg')
+    # ani.save('mnist.mp4', writer='ffmpeg')
     plt.show()
