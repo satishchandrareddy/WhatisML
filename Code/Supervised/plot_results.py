@@ -64,7 +64,6 @@ def plot_results_linear_animation(Xtrain,Ytrain,model):
     # create mp4 version of animation - need to install ffmpeg 
     # look up on internet for intallation instructions
     # ani.save('LinearRegression.mp4', writer='ffmpeg')
-
     return ani
 
 
@@ -198,4 +197,5 @@ def plot_results_mnist_animation(X,Y,Y_pred,nframe):
     # create mp4 version of animation - need to install ffmpeg 
     # look up on internet for intallation instructions
     # ani.save('mnist.mp4', writer='ffmpeg')
+    plt.show()
     return ani
