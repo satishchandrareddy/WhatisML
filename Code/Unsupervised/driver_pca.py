@@ -1,4 +1,4 @@
-# pca.py
+# driver_pca.py
 
 import load_mnist
 import numpy as np
