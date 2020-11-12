@@ -39,6 +39,7 @@ def plot_results_linear_animation(Xtrain,Ytrain,model):
     fig,ax=plt.subplots()
     ax.set_xlabel("House Area (1000s sq ft)")
     ax.set_ylabel("House Price (millions $)")
+    ax.set_ylim(0, 1.1*np.max(Y))
     # get plot of training data
     train = ax.scatter(np.squeeze(Xtrain),np.squeeze(Ytrain), c="b", marker="o", label="Training Data")
     model.set_param(param_list[0])
