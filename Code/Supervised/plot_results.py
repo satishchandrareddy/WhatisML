@@ -15,57 +15,57 @@ def plot_results_history(history,key_list):
     plt.title(",".join(key_list))
     plt.legend(loc="upper right")
 
-def plot_results_linear(Xtrain,Ytrain,model):
+def plot_results_linear(Xtrain,Ytrain,**kwargs):
     # plot training data and  machine learning solution
-    # determine machine learning prediction
-    Xtest = np.array([[np.min(Xtrain[0,:]),np.max(Xtrain[0,:])]])
-    Ytest_pred = model.predict(Xtest)
     # plot results
     plt.figure()
     plt.xlabel("House Area (1000s sq ft)")
     plt.ylabel("House Price (millions $)")
+    plt.ylim(0, 1.1*np.max(Ytrain))
     plt.title("Linear Regression")
     plt.plot(np.squeeze(Xtrain),np.squeeze(Ytrain),"bo",label="Training Data")
-    plt.plot(np.squeeze(Xtest),np.squeeze(Ytest_pred),"r-",linewidth = 3, label="Machine Learning Prediction")
+    # plot machine learning solution if model is provided
+    if "model" in kwargs:
+        Xtest = np.array([[np.min(Xtrain[0,:]),np.max(Xtrain[0,:])]])
+        Ytest_pred = kwargs["model"].predict(Xtest)        
+        plt.plot(np.squeeze(Xtest),np.squeeze(Ytest_pred),"r-",linewidth = 3, label="Machine Learning Prediction")
     plt.legend(loc = "upper left")
 
 def plot_results_linear_animation(Xtrain,Ytrain,model):
-    # plot training data and  machine learning solution
-    # determine machine learning prediction
+    # plot training data and  machine learning solution animation
     Xtest = np.array([[np.min(Xtrain[0,:]),np.max(Xtrain[0,:])]])
     Ytest_pred = model.predict(Xtest)
     # generate plots of machine learning prediction and create container of plots
     param_list = model.get_param_list()
     fig,ax=plt.subplots()
-    ax.set_xlabel("House Area (1000s sq ft)")
-    ax.set_ylabel("House Price (millions $)")
-    ax.set_ylim(0, 1.1*np.max(Ytrain))
-    # get plot of training data
-    train = ax.scatter(np.squeeze(Xtrain),np.squeeze(Ytrain), c="b", marker="o", label="Training Data")
+    plt.xlabel("House Area (1000s sq ft)")
+    plt.ylabel("House Price (millions $)")
+    plt.ylim(0, 1.1*np.max(Ytrain))
+    plt.title("Linear Regression")
+    # plot of training data
+    plt.plot(np.squeeze(Xtrain),np.squeeze(Ytrain),"bo", markersize=5, label="Training Data")
+    # plot machine learning solution
     model.set_param(param_list[0])
     Ymodel = model.predict(Xtest)
-    ml = plt.plot(np.squeeze(Xtest),np.squeeze(Ymodel),"r-",linewidth=3,label="Machine Learning Prediction")[0]
-    title = ax.set_title("Linear Regression")
-    ax.legend(loc="upper left")
+    plt.plot([],[],"r-",linewidth=3,label="Machine Learning Prediction")
+    plt.legend(loc="upper left")
     
-    #function to update animation
-    def animate(i, param_list, Xtest):
-        model.set_param(param_list[i])
+    # generate animation
+    container = []
+    for param in param_list:
+        model.set_param(param)
         Ymodel = model.predict(Xtest)
-        ml.set_data(np.squeeze(Xtest), np.squeeze(Ymodel))
-        title = ax.set_title(f"Linear Regression - Iteration: {i}")
-        return ml, title
+        train, = plt.plot(np.squeeze(Xtrain),np.squeeze(Ytrain),"bo", markersize=5, label="Training Data")
+        ml, = plt.plot(np.squeeze(Xtest),np.squeeze(Ymodel),"r-",linewidth=3,label="Machine Learning Prediction")
+        container.append([train,ml])
 
-    n_epochs = len(param_list)
     # create animation
-    ani = animation.FuncAnimation(fig, animate, fargs=[param_list, Xtest],
-                               frames=n_epochs, interval=100, blit=True)
+    ani = animation.ArtistAnimation(fig,container,interval=100,repeat_delay=500,repeat=False,blit=True)
    
     # create mp4 version of animation - need to install ffmpeg 
     # look up on internet for intallation instructions
     # ani.save('LinearRegression.mp4', writer='ffmpeg')
     return ani
-
 
 def plot_results_classification(Xtrain,Ytrain,model,nclass=2):
     plot_results_data(Xtrain,Ytrain,nclass)
@@ -81,7 +81,7 @@ def plot_results_data(Xtrain,Ytrain,nclass=2):
     plt.title("Training Data")
 
 def plot_scatter(Xtrain,Ytrain,nclass=2):
-    symbol_train = ["ro","bo","go","co","yo"]
+    symbol_train = ["ro","bo","go","co","yo","mo","ko"]
     container = []
     for count in range(nclass):
         idx_train = np.where(np.squeeze(np.absolute(Ytrain-count))<1e-10)
@@ -126,35 +126,25 @@ def plot_results_classification_animation(Xtrain,Ytrain,model,nclass=2):
     fig,ax = plt.subplots()
     plt.xlabel("X0")
     plt.ylabel("X1")
+    plt.title("Classification")
     plt.xlim(-2,2)
     plt.ylim(-2,2)
-    
-    scatter = plot_scatter(Xtrain,Ytrain,nclass)
-    legend = plt.legend(loc="upper left")
-    title = ax.set_title("Classification")
-    model.set_param(param_list[0])
-    yreshape = model.predict(np.concatenate((x0reshape,x1reshape),axis=0))
-    # reshape results into 2d grid and plot heatmap
-    heatmap = plt.pcolormesh(x0grid,x1grid,np.reshape(yreshape,(npoints,npoints)))
-    plt.colorbar()
-
-    def animate(i):
+    container = []
+    for param in param_list:
+        # plot training data
+        frame = plot_scatter(Xtrain,Ytrain,nclass)
         # predict results (concatenated x0 and x1 1-d grids to create feature matrix)
-        model.set_param(param_list[i])
+        model.set_param(param)
         yreshape = model.predict(np.concatenate((x0reshape,x1reshape),axis=0))
         # reshape results into 2d grid and plot heatmap
         heatmap = plt.pcolormesh(x0grid,x1grid,np.reshape(yreshape,(npoints,npoints)))
-        title = ax.set_title(f"Classification - Iteration: {i}")
-        return heatmap, title
-
-    n_epochs = len(param_list)
-    # create animation
-    ani = animation.FuncAnimation(fig, animate, frames=n_epochs, 
-                                interval=100, blit=True)
+        frame.insert(0,heatmap)
+        container.append(frame)
+    plt.colorbar()
+    ani = animation.ArtistAnimation(fig,container,interval=100,repeat=False,repeat_delay=1000,blit=True)
     # create mp4 version of animation - need to install ffmpeg 
     # look up on internet for intallation instructions
-    # ani.save('classification.mp4', writer='ffmpeg')
-
+    #ani.save('sample.mp4', writer='ffmpeg')
     return ani
 
 def plot_data_mnist(X,Y):
@@ -197,4 +187,5 @@ def plot_results_mnist_animation(X,Y,Y_pred,nframe):
     # create mp4 version of animation - need to install ffmpeg 
     # look up on internet for intallation instructions
     # ani.save('mnist.mp4', writer='ffmpeg')
+    plt.show()
     return ani

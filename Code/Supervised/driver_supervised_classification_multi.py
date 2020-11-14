@@ -7,13 +7,23 @@ import numpy as np
 import Optimizer
 import plot_results
 
-# (1) Set up data
-np.random.seed(11)
-nfeature = 2
-m = 2000
+# Things to try:
+# Change random seed to get different random numbers: seed
+# Change number of data samples: nsample
+# Change data case: try case ="cubic", "disk"
+# Change number of classes: nclass (between 2 and 7)
+# Change learning rate for optimization: learning_rate
+# Change number of iterations: niterations
+seed = 11
+nsample = 2000
 case = "quadratic"
 nclass = 4
-X,Y = example_classification.example(nfeature,m,case,nclass)
+learning_rate = 0.02
+niterations = 100
+# (1) Set up data
+np.random.seed(seed)
+nfeature = 2
+X,Y = example_classification.example(nfeature,nsample,case,nclass)
 # (2) Define model
 model = NeuralNetwork.NeuralNetwork(nfeature)
 model.add_layer(15,"tanh")
@@ -26,14 +36,14 @@ model.add_layer(nclass,"softmax")
 optimizer = Optimizer.Adam(0.02,0.9,0.999,1e-8)
 model.compile("crossentropy",optimizer)
 # (4) Train model
-epochs = 100
-history = model.fit(X,Y,epochs)
+history = model.fit(X,Y,niterations)
 # (5) Results
 # plot loss and accuracy
 plot_results.plot_results_history(history,["loss"])
 # plot data
 plot_results.plot_results_data(X,Y,nclass)
-# plot heatmap in x0-x1 plane
+# plot final heatmap
 plot_results.plot_results_classification(X,Y,model,nclass)
+# plot animation
 plot_results.plot_results_classification_animation(X,Y,model,nclass)
 plt.show()

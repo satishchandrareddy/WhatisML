@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 from pathlib import Path
 
-def load_mnist(ntrain,nvalid):
+def load_mnist(ntrain,nvalid=0):
 	# read data from train files
 	root_dir = Path(__file__).resolve().parent.parent
 	dftrain1 = pd.read_csv(root_dir / "Data_MNIST/MNIST_train_set1_30K.csv")
@@ -25,6 +25,10 @@ def load_mnist(ntrain,nvalid):
 	# get requested number of training data samples
 	Xtrain = Xtrain[:,:ntrain]
 	Ytrain = Ytrain[:,:ntrain]
+	print("Xtrain.shape: {} - Ytrain.shape: {}".format(Xtrain.shape,Ytrain.shape))
+	if nvalid == 0:
+		return Xtrain,Ytrain
+
 	# get validation data
 	dfvalid = pd.read_csv(root_dir / "Data_MNIST/MNIST_valid_10K.csv")
 	Yvalid = dfvalid["label"].values
@@ -34,7 +38,6 @@ def load_mnist(ntrain,nvalid):
 	# get requested number of validation data samples
 	Xvalid = Xvalid[:,:nvalid]
 	Yvalid = Yvalid[:,:nvalid]
-	print("Xtrain.shape: {} - Ytrain.shape: {}".format(Xtrain.shape,Ytrain.shape))
 	print("Xvalid.shape: {} - Yvalid.shape: {}".format(Xvalid.shape,Yvalid.shape))
 	return Xtrain,Ytrain,Xvalid,Yvalid
 

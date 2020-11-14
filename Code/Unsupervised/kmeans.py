@@ -6,6 +6,7 @@ import create_data_cluster
 import matplotlib.animation as animation
 import matplotlib.pyplot as plt
 import numpy as np
+import plot_data
 
 class kmeans:
     def __init__(self,nfeature,ncluster):
@@ -80,33 +81,32 @@ class kmeans:
 
     def plot_cluster(self,X):
         # plot final clusters and means
-        list_color = ["k", "r", "g", "m", "c"]
+        list_color = plot_data.get_colors()
         fig,ax = plt.subplots(1,1)
         # plot data points separate color for each cluster
         ax.set_xlabel("Relative Salary")
         ax.set_ylabel("Relative Purchases")
-        ax.set_title("Clusters")
+        ax.set_title("Clusters Using K Means")
         for cluster in range(self.ncluster):
             # plot cluster data
-            symbol = list_color[cluster] + "o"
             idx = np.squeeze(np.where(np.absolute(self.clustersave[-1] - cluster)<1e-7))
-            clusterdata, = plt.plot(X[0,idx],X[1,idx],symbol,markersize=4)
+            clusterdata, = plt.plot(X[0,idx],X[1,idx],color=list_color[cluster],markersize=4,marker="o",linestyle="None")
             # plot mean points 
-            out, = plt.plot(self.meansave[-1][0,cluster],self.meansave[-1][1,cluster],color=list_color[cluster],marker ="s", markersize=8)
+            out, = plt.plot(self.meansave[-1][0,cluster],self.meansave[-1][1,cluster],color=list_color[cluster],marker ="s", markersize=8,linestyle="None")
 
     def plot_results_animation(self,X):
-        list_color = ["k", "r", "g", "m", "c"]
+        list_color = plot_data.get_colors()
         fig,ax = plt.subplots(1,1)
         container = []
         original = True
         for count in range(len(self.meansave)):
-            iter_label_posy, iter_label_posx = ax.get_ylim()[1], ax.get_xlim()[1]
-            iteration_label = ax.text(0.85*iter_label_posx, 1.07*iter_label_posy,
-                    "", size=12, ha="center", animated=False)
+            #iter_label_posy, iter_label_posx = ax.get_ylim()[1], ax.get_xlim()[1]
+            #iteration_label = ax.text(0.85*iter_label_posx, 1.07*iter_label_posy,
+            #        "", size=12, ha="center", animated=False)
             # plot data points ----- use separate frame
             ax.set_xlabel("Relative Salary")
             ax.set_ylabel("Relative Purchases")
-            ax.set_title("Clusters")
+            ax.set_title("Clusters using K Means")
             frame = []
             if original:
                 # plot original data points in a single colour
@@ -116,12 +116,12 @@ class kmeans:
             else:
                 # plot points for each cluster in separate colour
                 for cluster in range(self.ncluster):
-                    symbol = list_color[cluster] + "o"
+                    symbol = list_color[cluster] 
                     idx = np.squeeze(np.where(np.absolute(self.clustersave[count-1] - cluster)<1e-7))
-                    clusterdata, = plt.plot(X[0,idx],X[1,idx],symbol,markersize=4)
+                    clusterdata, = plt.plot(X[0,idx],X[1,idx],color=list_color[cluster],marker="o",markersize=4,linestyle="None")
                     frame.append(clusterdata)
-                    iteration_label.set_text(f"Iteration: {count}")
-                    frame.append(iteration_label)
+                    #iteration_label.set_text(f"Iteration: {count}")
+                    #frame.append(iteration_label)
             container.append(frame)
             # ------
             # plot mean points ----- use separate frame

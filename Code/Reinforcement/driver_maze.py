@@ -4,13 +4,20 @@ import maze
 import matplotlib.pyplot as plt
 import numpy as np
 
- # (1) create model
+# Things to try:
+# Change random seed to get different random numbers: seed
+# Change width and height of maze: width, height
+# Change epsilon - can compare 2 values: epsilon1 and epsilon2
+# Change number of pulls: 
+seed = 11
 width = 5
 height = 5
+nepisode = 50 
+# (1) create model
+np.random.seed(seed)
 epsilon = 0.0
 model = maze.maze(width,height,epsilon)
 # (2) simulate
-nepisode = 80
 alpha = 1
 model.qlearning(nepisode,alpha)
 # (3) plot results
