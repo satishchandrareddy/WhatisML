@@ -17,7 +17,7 @@ seed = 10
 ntrain = 6000
 nvalid = 1000
 learning_rate = 0.02
-niterations = 40
+niteration = 40
 # (1) Set up data
 nclass = 10
 Xtrain,Ytrain,Xvalid,Yvalid = load_mnist.load_mnist(ntrain,nvalid)
@@ -32,7 +32,7 @@ optimizer = Optimizer.Adam(learning_rate,0.9,0.999,1e-7)
 model.compile("crossentropy",optimizer)
 model.summary()
 # (4) Train model
-history = model.fit(Xtrain,Ytrain,niterations)
+history = model.fit(Xtrain,Ytrain,niteration)
 # (5) Predictions and plotting
 # plot data, loss, and animation of results
 Yvalid_pred = model.predict(Xvalid)

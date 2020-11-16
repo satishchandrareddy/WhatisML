@@ -132,6 +132,6 @@ class kmeans:
         ani = animation.ArtistAnimation(fig,container, repeat = False, interval=350, blit=True)
         # uncomment to create mp4 
         # need to have ffmpeg installed on your machine - search for ffmpeg on internet to get detaisl
-        # ani.save('cluster.mp4', writer='ffmpeg')
+        #ani.save('cluster.mp4', writer='ffmpeg')
 
         return ani

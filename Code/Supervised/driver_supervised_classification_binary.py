@@ -12,12 +12,12 @@ import plot_results
 # Change number of data samples: nsample
 # Change data case: try case ="cubic", "disk"
 # Change learning rate for optimization: learning_rate
-# Change number of iterations: niterations
+# Change number of iterations: niteration
 seed = 41
 nsample = 1000
 case = "quadratic"
 learning_rate = 0.05
-niterations = 100
+niteration = 100
 # (1) Set up data
 np.random.seed(seed)
 nfeature = 2

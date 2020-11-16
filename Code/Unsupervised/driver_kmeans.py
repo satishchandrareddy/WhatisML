@@ -10,11 +10,11 @@ import plot_data
 # Change random seed to get different random numbers: seed
 # Change number of data samples: nsample
 # Change number of clusters: ncluster
-# Change number of iterations if needed: niterations
+# Change number of iterations if needed: niteration
 seed = 21
 nsample = 200
 ncluster = 3
-niterations = 20
+niteration = 20
 # (1) generate data
 # comment out seed line to generate different sets of random numbers
 np.random.seed(seed)
@@ -24,7 +24,7 @@ X,mean = create_data_cluster.create_data_cluster(nfeature,nsample,ncluster,std)
 # (2) create model
 model = kmeans.kmeans(nfeature,ncluster)
 # (3) fit model
-model.fit(X,niterations)
+model.fit(X,niteration)
 # (4) plot results
 model.plot_objective()
 # plot initial data

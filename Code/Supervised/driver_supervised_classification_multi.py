@@ -19,7 +19,7 @@ nsample = 2000
 case = "quadratic"
 nclass = 4
 learning_rate = 0.02
-niterations = 100
+niteration = 100
 # (1) Set up data
 np.random.seed(seed)
 nfeature = 2
@@ -36,7 +36,7 @@ model.add_layer(nclass,"softmax")
 optimizer = Optimizer.Adam(0.02,0.9,0.999,1e-8)
 model.compile("crossentropy",optimizer)
 # (4) Train model
-history = model.fit(X,Y,niterations)
+history = model.fit(X,Y,niteration)
 # (5) Results
 # plot loss and accuracy
 plot_results.plot_results_history(history,["loss"])

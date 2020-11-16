@@ -6,8 +6,8 @@ import matplotlib.pyplot as plt
 # Things to try:
 # Change random seed to get different random numbers: seed
 # Change number of bandits: nbandit
-# Change epsilon - can compare 2 values: epsilon1 and epsilon2
-# Change number of pulls: 
+# Change epsilon - can compare 2 values: epsilon1 and epsilon2 (>=0 and less than 1)
+# Change number of pulls: npull
 seed = 10
 nbandit = 10
 epsilon1 = 0

@@ -11,12 +11,13 @@ import plot_results
 # Change random seed to get different random numbers: seed
 # Change number of data samples: nsample
 # Change learning rate for optimization: learning_rate
-# Change number of iterations: niterations
+# Change number of iterations: niteration
 seed = 100
 nsample = 500
 learning_rate = 0.1
-niterations = 100
+niteration = 100
 # (1) Set up data
+np.random.seed(seed)
 nfeature = 1
 X,Y = example_regression.example(nfeature,nsample)
 # (2) define model
@@ -29,12 +30,13 @@ model.set_param(initial_param)
 optimizer = Optimizer.GradientDescent(learning_rate)
 model.compile("meansquarederror",optimizer)
 # (4) Learning
-history = model.fit(X,Y,niterations)
+history = model.fit(X,Y,niteration)
 # (5) Results
 # plot loss 
 plot_results.plot_results_history(history,["loss"])
 # plot data and final machine learning solution
-plot_results.plot_results_linear(X,Y,model=model)
+#plot_results.plot_results_linear(X,Y,model=model)
+plot_results.plot_results_linear(X,Y)
 # animation
 plot_results.plot_results_linear_animation(X,Y,model)
 plt.show()

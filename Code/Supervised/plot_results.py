@@ -64,7 +64,7 @@ def plot_results_linear_animation(Xtrain,Ytrain,model):
    
     # create mp4 version of animation - need to install ffmpeg 
     # look up on internet for intallation instructions
-    # ani.save('LinearRegression.mp4', writer='ffmpeg')
+    #ani.save('LinearRegression.mp4', writer='ffmpeg')
     return ani
 
 def plot_results_classification(Xtrain,Ytrain,model,nclass=2):
@@ -144,7 +144,7 @@ def plot_results_classification_animation(Xtrain,Ytrain,model,nclass=2):
     ani = animation.ArtistAnimation(fig,container,interval=100,repeat=False,repeat_delay=1000,blit=True)
     # create mp4 version of animation - need to install ffmpeg 
     # look up on internet for intallation instructions
-    #ani.save('sample.mp4', writer='ffmpeg')
+    #ani.save('Classification.mp4', writer='ffmpeg')
     return ani
 
 def plot_data_mnist(X,Y):
@@ -183,9 +183,9 @@ def plot_results_mnist_animation(X,Y,Y_pred,nframe):
         # append image/title to container
         container.append([pc, digit_title])
 
-    ani = animation.ArtistAnimation(fig,container,interval=500,repeat=False,blit=False)
+    ani = animation.ArtistAnimation(fig,container,interval=1000,repeat=True,blit=False)
     # create mp4 version of animation - need to install ffmpeg 
     # look up on internet for intallation instructions
-    # ani.save('mnist.mp4', writer='ffmpeg')
+    #ani.save('mnist.mp4', writer='ffmpeg')
     plt.show()
     return ani
