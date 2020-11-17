@@ -110,7 +110,7 @@ class NeuralNetwork:
             loss.append(self.compute_loss(Y))
             accuracy.append(self.accuracy(Y,Y_pred))
             if verbose:
-                print("Epoch: {} - Loss: {} - Accuracy: {}".format(epoch+1,loss[epoch],accuracy[epoch]))
+                print("Iteration: {} - Loss: {} - Accuracy: {}".format(epoch+1,loss[epoch],accuracy[epoch]))
             self.save_param()
         return {"loss":loss,"accuracy":accuracy}
 

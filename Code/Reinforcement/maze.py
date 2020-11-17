@@ -181,6 +181,8 @@ class maze:
         ax.text(self.width - 0.7, 0.5, "End", size=15)
         ax.yaxis.set_ticklabels([])
         ax.xaxis.set_ticklabels([])
+        ax.set_xticks(list(range(0,self.width)))
+        ax.set_yticks(list(range(0,self.height)))
         ax.set_xlim(0,self.width)
         ax.set_ylim(0,self.height)
         ax.grid(True)
