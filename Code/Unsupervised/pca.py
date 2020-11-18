@@ -18,4 +18,4 @@ class pca:
         cumulative_variance_capture = cumulative_variance[cumulative_variance<=self.variance_capture*total_variance]
         reduced_dim = np.size(cumulative_variance_capture)
         print("Reduced dimension for {} variance capture: {}".format(self.variance_capture,reduced_dim))
-        return np.expand_dims(s[0:reduced_dim],axis=1)*vh[0:reduced_dim,:]
+        return np.dot(u[:,0:reduced_dim],np.expand_dims(s[0:reduced_dim],axis=1)*vh[0:reduced_dim,:])
