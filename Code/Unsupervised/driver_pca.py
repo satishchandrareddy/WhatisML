@@ -7,7 +7,7 @@ import pca
 import plot_data
 
 # Things to try:
-# Change number of training data samples: ntrain up to 60000
+# Change number of training data samples: ntrain up to 10000
 # Change variance capture: variance capture (greater than 0 and less equal to 1)
 ntrain = 6000
 variance_capture = 0.99
