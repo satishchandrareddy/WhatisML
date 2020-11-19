@@ -6,7 +6,7 @@ import numpy as np
 
 # Things to try:
 # Change random seed to get different random numbers: seed
-# Change width and height of maze: width, height
+# Change width and height of maze: width, height (max 8 for each)
 # Change number of episodes: nepisode
 seed = 11
 width = 5

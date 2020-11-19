@@ -140,7 +140,7 @@ class maze:
             self.valuesave.append(deepcopy(self.value))
 
     def qlearning(self,nepisode,alpha):
-        ntransition = 1000
+        ntransition = 2000
         reward_episode_avg = 0
         self.initialize_value()
         self.valuesave = [deepcopy(self.value)]
