@@ -1,4 +1,4 @@
-# driver_maze.py
+# driver_reinforcement_kbandit.py
 
 import kbandit
 import matplotlib.pyplot as plt

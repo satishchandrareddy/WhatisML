@@ -1,4 +1,4 @@
-# driver_neuralnetwork_binary.py
+# driver_supervised_classification_binary.py
 
 import example_classification
 import matplotlib.pyplot as plt

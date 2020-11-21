@@ -1,4 +1,4 @@
-# driver_pca.py
+# driver_unsupervised_pca.py
 
 import load_mnist
 import matplotlib.pyplot as plt

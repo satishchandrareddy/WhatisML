@@ -1,4 +1,4 @@
-# driver_supervised_linearregression.py
+# driver_supervised_regression_linear.py
 
 import example_regression
 import matplotlib.pyplot as plt

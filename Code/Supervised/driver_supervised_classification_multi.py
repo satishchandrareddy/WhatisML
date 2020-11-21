@@ -1,4 +1,4 @@
-# driver_neuralnetwork_multiclass.py
+# driver_supervised_classification_multi.py
 
 import example_classification
 import matplotlib.pyplot as plt

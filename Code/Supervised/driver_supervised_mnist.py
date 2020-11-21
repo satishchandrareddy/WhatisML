@@ -1,4 +1,4 @@
-# driver_neuralnetwork_mnist.py
+# driver_supervised_mnist.py
 
 import load_mnist
 import NeuralNetwork

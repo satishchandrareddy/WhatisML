@@ -1,4 +1,4 @@
-# driver_maze.py
+# driver_reinforcement_maze.py
 
 import maze
 import matplotlib.pyplot as plt
