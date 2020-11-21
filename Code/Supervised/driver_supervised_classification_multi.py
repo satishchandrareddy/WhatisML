@@ -8,10 +8,10 @@ import Optimizer
 import plot_results
 
 # Things to try:
-# Change random seed to get different random numbers: seed
+# Change random seed to get different random numbers: seed (integer)
 # Change number of data samples: nsample
-# Change data case: try case ="cubic", "disk"
-# Change number of classes: nclass (between 2 and 7)
+# Change data case: try case = "quadratic", "cubic", "disk" or "band"
+# Change number of classes: nclass (between 2 and 4)
 # Change learning rate for optimization: learning_rate
 # Change number of iterations: niterations
 seed = 11

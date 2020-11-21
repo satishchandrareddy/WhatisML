@@ -8,8 +8,8 @@ import Optimizer
 import plot_results
 
 # Things to try:
-# Change random seed to get different random numbers: seed
-# Change number of training data samples: ntrain up to 60000
+# Change random seed to get different random numbers: seed (integer)
+# Change number of training data samples: ntrain up to 60000 
 # Change number of validation data samples: nvalid up to 10000
 # Change learning rate for optimization: learning_rate
 # Change number of iterations: niterations
