@@ -33,7 +33,7 @@ model.add_layer(1,"sigmoid")
 optimizer = Optimizer.Adam(learning_rate,0.9,0.999,1e-8)
 model.compile("binarycrossentropy",optimizer)
 # (4) Train model
-history = model.fit(X,Y,niterations)
+history = model.fit(X,Y,niteration)
 # (5) Results
 # plot loss and accuracy
 plot_results.plot_results_history(history,["loss"])
