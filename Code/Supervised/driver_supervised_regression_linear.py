@@ -10,7 +10,7 @@ import plot_results
 # Things to try:
 # Change random seed to get different random numbers: seed (integer)
 # Change number of data samples: nsample
-# Change learning rate for optimization: learning_rate
+# Change learning rate for optimization: learning_rate >0
 # Change number of iterations: niteration
 seed = 100
 nsample = 500

@@ -11,7 +11,7 @@ import plot_results
 # Change random seed to get different random numbers: seed (integer)
 # Change number of data samples: nsample
 # Change data case: try case = "quadratic", "cubic", "disk" or "band"
-# Change learning rate for optimization: learning_rate
+# Change learning rate for optimization: learning_rate >0
 # Change number of iterations: niteration
 seed = 41
 nsample = 1000

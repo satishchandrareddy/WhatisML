@@ -12,7 +12,7 @@ import plot_results
 # Change number of data samples: nsample
 # Change data case: try case = "quadratic", "cubic", "disk" or "band"
 # Change number of classes: nclass (between 2 and 4)
-# Change learning rate for optimization: learning_rate
+# Change learning rate for optimization: learning_rate >0
 # Change number of iterations: niterations
 seed = 11
 nsample = 2000
