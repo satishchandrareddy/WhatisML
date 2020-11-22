@@ -5,8 +5,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # Things to try:
-# Change random seed to get different random numbers: seed
-# Change width and height of maze: width, height (max 8 for each)
+# Change random seed to get different random numbers: seed (integer)
+# Change width and height of maze: width, height (between 3 and 8 for each)
 # Change number of episodes: nepisode
 seed = 11
 width = 5
