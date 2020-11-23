@@ -142,3 +142,61 @@ class NeuralNetwork:
         print
         print("Total parameters: {}".format(nparameter_total))
         print(" ")
+
+    def test_derivative(self,X,Y,eps):
+        # compute gradients
+        self.forward_propagate(X)
+        self.back_propagate(X,Y)
+        # concatenate parameters and gradients
+        param_original = self.concatenate_param("param")
+        param_der_model = self.concatenate_param("param_der")
+        #approximate derivative using centred-differences bump of eps
+        nparam = param_original.shape[1]
+        param_der_approx = np.zeros((1,nparam))
+        for idx in range(nparam):
+            # cost plus
+            param_plus = param_original.copy()
+            param_plus[:,idx] += eps
+            self.load_param(param_plus,"param")
+            self.forward_propagate(X)
+            cost_plus = self.compute_loss(Y)
+            # cost minus
+            param_minus = param_original.copy()
+            param_minus[:,idx] -= eps
+            self.load_param(param_minus,"param")
+            self.forward_propagate(X)
+            cost_minus = self.compute_loss(Y)
+            # apply centred difference formula
+            param_der_approx[:,idx] = (cost_plus - cost_minus)/(2*eps)
+        # estimate accuracy of derivatives
+        abs_error = np.absolute(param_der_model - param_der_approx)
+        rel_error = abs_error/(np.absolute(param_der_approx)+1e-15)
+        error = min(np.max(abs_error),np.max(rel_error))
+        return error
+
+    def concatenate_param(self,order):
+        # use flat to collect all parameters (initial shape is 1 row and 0 columns)
+        flat = np.zeros((1,0))
+        for layer in range(self.nlayer):
+            # get number rows and columns in W and b in layer
+            nrow = self.info[layer]["nOut"]
+            ncol = self.info[layer]["nIn"]
+            # convert W and b into row vectors and then concatenate to flat
+            Wrow = np.reshape(self.get_param(layer,order,"W"),(1,nrow*ncol))
+            brow = np.reshape(self.get_param(layer,order,"b"),(1,nrow))
+            flat = np.concatenate((flat,Wrow,brow),axis=1)
+        return flat
+
+    def load_param(self,flat,order):
+        start = 0
+        for layer in range(self.nlayer):
+            # get number rows and columns in W and b in layer
+            nrow = self.info[layer]["nOut"]
+            ncol = self.info[layer]["nIn"]
+            # get start and end points of W and b
+            endW = start + ncol*nrow
+            endb = endW + nrow
+            # extract data from flat and put into correct shape into W and b
+            self.info[layer][order]["W"]=np.reshape(flat[0][start:endW],(nrow,ncol))
+            self.info[layer][order]["b"]=np.reshape(flat[0][endW:endb],(nrow,1))
+            start = endb

@@ -10,7 +10,7 @@ import plot_results
 # Things to try:
 # Change random seed to get different random numbers: seed (integer)
 # Change number of data samples: nsample
-# Change data case: try case = "quadratic", "cubic", "disk" or "band"
+# Change data case: try case = "quadratic", "cubic"
 # Change number of classes: nclass (between 2 and 4)
 # Change learning rate for optimization: learning_rate >0
 # Change number of iterations: niterations
@@ -33,7 +33,7 @@ model.add_layer(6,"tanh")
 model.add_layer(3,"tanh")
 model.add_layer(nclass,"softmax")
 # (3) Compile model
-optimizer = Optimizer.Adam(0.02,0.9,0.999,1e-8)
+optimizer = Optimizer.Adam(learning_rate,0.9,0.999,1e-8)
 model.compile("crossentropy",optimizer)
 # (4) Train model
 history = model.fit(X,Y,niteration)
