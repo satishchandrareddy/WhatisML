@@ -60,7 +60,7 @@ def plot_results_linear_animation(Xtrain,Ytrain,model):
         container.append([train,ml])
 
     # create animation
-    ani = animation.ArtistAnimation(fig,container,interval=100,repeat_delay=500,repeat=False,blit=True)
+    ani = animation.ArtistAnimation(fig,container,interval=100,repeat_delay=500,repeat=True,blit=True)
    
     # create mp4 version of animation - need to install ffmpeg 
     # look up on internet for intallation instructions
