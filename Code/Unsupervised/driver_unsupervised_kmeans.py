@@ -30,5 +30,5 @@ model.plot_objective()
 # plot initial data
 plot_data.plot_data2d(X,mean=model.get_meansave()[0])
 # animation
-model.plot_results_animation(X)
+ani = model.plot_results_animation(X)
 plt.show()

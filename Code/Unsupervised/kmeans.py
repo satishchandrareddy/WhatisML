@@ -129,7 +129,7 @@ class kmeans:
                 out, = plt.plot(self.meansave[count][0,cluster],self.meansave[count][1,cluster],color=list_color[cluster],marker ="s", markersize=8)
                 frame.append(out)
             container.append(frame)
-        ani = animation.ArtistAnimation(fig,container, repeat = False, interval=350, blit=True)
+        ani = animation.ArtistAnimation(fig,container, repeat = True, interval=350, blit=True)
         # uncomment to create mp4 
         # need to have ffmpeg installed on your machine - search for ffmpeg on internet to get detaisl
         #ani.save('cluster.mp4', writer='ffmpeg')
