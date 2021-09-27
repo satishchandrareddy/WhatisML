@@ -34,9 +34,8 @@ history = model.fit(X,Y,niteration)
 # (5) Results
 # plot loss 
 plot_results.plot_results_history(history,["loss"])
-# plot data and final machine learning solution
-#plot_results.plot_results_linear(X,Y,model=model)
+# plot data
 plot_results.plot_results_linear(X,Y)
 # animation
-plot_results.plot_results_linear_animation(X,Y,model)
+ani = plot_results.plot_results_linear_animation(X,Y,model)
 plt.show()

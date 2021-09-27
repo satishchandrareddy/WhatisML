@@ -106,7 +106,7 @@ def plot_results_heatmap(Xtrain,model):
     yreshape = model.predict(np.concatenate((x0reshape,x1reshape),axis=0))
     # reshape results into 2d grid and plot heatmap
     heatmap = np.reshape(yreshape,(npoints,npoints))
-    plt.pcolormesh(x0grid,x1grid,heatmap)
+    plt.pcolormesh(x0grid,x1grid,heatmap,shading="auto")
     plt.colorbar()
     plt.title("Data and Heatmap of Prediction Results")
 
@@ -137,11 +137,11 @@ def plot_results_classification_animation(Xtrain,Ytrain,model,nclass=2):
         model.set_param(param)
         yreshape = model.predict(np.concatenate((x0reshape,x1reshape),axis=0))
         # reshape results into 2d grid and plot heatmap
-        heatmap = plt.pcolormesh(x0grid,x1grid,np.reshape(yreshape,(npoints,npoints)))
+        heatmap = plt.pcolormesh(x0grid,x1grid,np.reshape(yreshape,(npoints,npoints)),shading="auto")
         frame.insert(0,heatmap)
         container.append(frame)
     plt.colorbar()
-    ani = animation.ArtistAnimation(fig,container,interval=100,repeat=False,repeat_delay=1000,blit=True)
+    ani = animation.ArtistAnimation(fig,container,interval=100,repeat=True,repeat_delay=1000,blit=True)
     # create mp4 version of animation - need to install ffmpeg 
     # look up on internet for intallation instructions
     #ani.save('Classification.mp4', writer='ffmpeg')
@@ -187,5 +187,4 @@ def plot_results_mnist_animation(X,Y,Y_pred,nframe):
     # create mp4 version of animation - need to install ffmpeg 
     # look up on internet for intallation instructions
     #ani.save('mnist.mp4', writer='ffmpeg')
-    plt.show()
     return ani

@@ -45,5 +45,5 @@ plot_results.plot_results_data(X,Y,nclass)
 # plot final heatmap
 plot_results.plot_results_classification(X,Y,model,nclass)
 # plot animation
-plot_results.plot_results_classification_animation(X,Y,model,nclass)
+ani = plot_results.plot_results_classification_animation(X,Y,model,nclass)
 plt.show()

@@ -40,5 +40,5 @@ plot_results.plot_results_history(history,["loss"])
 # plot data
 plot_results.plot_results_data(X,Y,nclass)
 # plot learning animation
-plot_results.plot_results_classification_animation(X,Y,model,nclass)
+ani = plot_results.plot_results_classification_animation(X,Y,model,nclass)
 plt.show()
