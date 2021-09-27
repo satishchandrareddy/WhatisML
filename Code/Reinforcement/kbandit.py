@@ -134,7 +134,6 @@ def plot_results_bar_animation(list_epsilon,list_results):
         frame.extend(bars1)
         list_frame.append(frame)
     ani = animation.ArtistAnimation(fig,list_frame,interval=70,repeat=True,blit=False)
-    plt.show()
     # uncomment to create mp4 
     # need to have ffmpeg installed on your machine - search for ffmpeg on internet for details
     # ani.save('bandit.mp4', writer='ffmpeg')

@@ -23,5 +23,5 @@ model.qlearning(nepisode,alpha)
 # number of steps for each episode
 model.plot_steps()
 # animation of strategy
-model.plot_strategy_animation()
+ani = model.plot_strategy_animation()
 plt.show()

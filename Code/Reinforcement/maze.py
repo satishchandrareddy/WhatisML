@@ -227,7 +227,6 @@ class maze:
         ani = animation.FuncAnimation(fig, update_quiver, frames=nframe, fargs=(Q,Usave,Vsave),
                                repeat = False, interval=200, blit=False)
         fig.tight_layout()
-        plt.show()
         # uncomment to create mp4 
         # need to have ffmpeg installed on your machine - search internet for ffmpeg to get details
         #ani.save('maze.mp4',writer='ffmpeg')

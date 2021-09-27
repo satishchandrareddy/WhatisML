@@ -22,5 +22,5 @@ kbandit.plot_results_optimal(list_epsilon,list_na)
 # plot average reward
 kbandit.plot_results_reward(list_epsilon,list_reward)
 # animation of bar charts
-kbandit.plot_results_bar_animation(list_epsilon[0:2],list_na[0:2])
+ani = kbandit.plot_results_bar_animation(list_epsilon[0:2],list_na[0:2])
 plt.show()
